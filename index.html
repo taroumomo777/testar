@@ -8,6 +8,25 @@
     </head>
 
     <body style="margin: 0; overflow: hidden;">
+
+
+        <div id="result"></div>
+        <script>
+            var result = document.getElementById('result')
+            var xmlhttp = new XMLHttpRequest();
+
+              if (!xmlhttp) {
+                print("error 1\n");
+                return;
+              }
+
+              xmlhttp.onreadystatechange = onReadyStateChangeCallback;
+              xmlhttp.open('GET', 'https://ydf7mupasyhm2qygcwujzzyriu0faftb.lambda-url.ap-northeast-1.on.aws/');
+              xmlhttp.send(null);
+
+        </script>
+
+
         <a-scene
             vr-mode-ui="enabled: false;"
             loading-screen="enabled: false;"
