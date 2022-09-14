@@ -21,8 +21,9 @@
                 //console.log(this.response); // 通信結果を出力します。
                 //console.log(JSON.parse(ajax.response));
                 let responseJson = JSON.parse(ajax.response);
-                //console.log(responseJson.Items);
-                console.log(responseJson.Items.DataID.CO2_ppm);
+                console.log(responseJson.Items);
+                //console.log(responseJson.Items.DataID.CO2_ppm);
+                 console.log(responseJson.Items.DataID);
             }, false);
 
         </script>
