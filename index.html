@@ -18,8 +18,10 @@
             ajax.open("get", "https://ydf7mupasyhm2qygcwujzzyriu0faftb.lambda-url.ap-northeast-1.on.aws/");
             ajax.send(); // 通信させます。
             ajax.addEventListener("load", function(){ // loadイベントを登録します。
-                console.log(this.response); // 通信結果を出力します。
+                //console.log(this.response); // 通信結果を出力します。
                 //console.log(JSON.parse(ajax.response));
+                let responseJson = JSON.parse(ajax.response);
+                console.log(responseJson.Items);
             }, false);
 
         </script>
