@@ -14,19 +14,41 @@
         <script>
             var result = document.getElementById('result')
             var ajax = new XMLHttpRequest();
-
+            var co2=0;
             ajax.open("get", "https://ydf7mupasyhm2qygcwujzzyriu0faftb.lambda-url.ap-northeast-1.on.aws/");
             ajax.send(); // 通信させます。
             ajax.addEventListener("load", function(){ // loadイベントを登録します。
                 //console.log(this.response); // 通信結果を出力します。
                 //console.log(JSON.parse(ajax.response));
-                let responseJson = JSON.parse(ajax.response);
-                console.log(responseJson.Items);
+               // var responseJson = JSON.parse(ajax.response);
+                //console.log(responseJson.Items);
+                ///var json = JSON.parse(this.response);
+                var json = this.response;
+                ////console.log(json);
+                //console.log(json.Items);
                 //console.log(responseJson.Items.DataID.CO2_ppm);
                 // console.log(responseJson.Items.DataID);
-                
-                console.log(responseJson.Items.DataID.f_port);
+                //var cut2 = responseJson.substr(responseJson.indexOf('CO2_ppm":') + 1);
+                //var cut2 = responseJson.substr(ajax.response.indexOf('CO2_ppm":') + 1);
+                //console.log(cut2);
+                //console.log(responseJson.Items.DataID.f_port);
+                //console.log(responseJson.Items.DataID.session_key_id);
+                //console.log(json.indexOf('CO2_ppm":'));
+                //console.log(json.indexOf('CO2_ppm'));
+                var x=json.indexOf('CO2_ppm');
+                var y=json.indexOf('Hum');
+                co2=json.substring(x+10, y-4);
+                console.log(co2);
+                //console.log(json.substring(x+10, y-4));
+                //console.log(json.indexOf('CO2_ppm'));
             }, false);
+            
+            //var cut2 = responseJson.indexOf('CO2_ppm":') ;
+            //console.log(ajax.responseText);
+
+
+            //console.log(ajax.response);
+            //var cut2 = ajax.responseText.indexOf('CO2_ppm":') ;
 
         </script>
 
@@ -58,7 +80,7 @@
                     rotation="-90 0 0"
                     gesture-handler
                 ></a-image>
-                <a-text value="CO2:600ppm" color="red" rotation="-90 0 0" align="center" scale="5 5 5"></a-text>
+                <a-text value="CO2:"+document.write(co2)+"ppm" color="red" rotation="-90 0 0" align="center" scale="5 5 5"></a-text>
             </a-marker>
 
             <a-entity camera></a-entity>
