@@ -40,10 +40,13 @@
                 var y=json.indexOf('Hum');
                 co2=json.substring(x+10, y-4);
                 console.log(co2);
-                input=co2;
-                document.write(input);
+                input="CO2_ppm:"+str(co2);
                 //console.log(json.substring(x+10, y-4));
                 //console.log(json.indexOf('CO2_ppm'));
+                window.onload = function() {
+                  document.getElementById('output').innerHTML = input;
+                };
+      });
             }, false);
             
             //var cut2 = responseJson.indexOf('CO2_ppm":') ;
@@ -83,7 +86,7 @@
                     rotation="-90 0 0"
                     gesture-handler
                 ></a-image>
-                <a-text value="CO2:"<script>doc(input)</script> color="red" rotation="-90 0 0" align="center" scale="5 5 5"></a-text>
+                <a-text id="output" value="" color="red" rotation="-90 0 0" align="center" scale="5 5 5"></a-text>
             </a-marker>
 
             <a-entity camera></a-entity>
