@@ -15,6 +15,7 @@
             var result = document.getElementById('result')
             var ajax = new XMLHttpRequest();
             var co2=0;
+            var input = "0";
             ajax.open("get", "https://ydf7mupasyhm2qygcwujzzyriu0faftb.lambda-url.ap-northeast-1.on.aws/");
             ajax.send(); // 通信させます。
             ajax.addEventListener("load", function(){ // loadイベントを登録します。
@@ -39,6 +40,8 @@
                 var y=json.indexOf('Hum');
                 co2=json.substring(x+10, y-4);
                 console.log(co2);
+                input=co2;
+                document.write(input);
                 //console.log(json.substring(x+10, y-4));
                 //console.log(json.indexOf('CO2_ppm'));
             }, false);
@@ -80,7 +83,7 @@
                     rotation="-90 0 0"
                     gesture-handler
                 ></a-image>
-                <a-text value="CO2:"+document.write(co2)+"ppm" color="red" rotation="-90 0 0" align="center" scale="5 5 5"></a-text>
+                <a-text value="CO2:"<script>doc(input)</script> color="red" rotation="-90 0 0" align="center" scale="5 5 5"></a-text>
             </a-marker>
 
             <a-entity camera></a-entity>
