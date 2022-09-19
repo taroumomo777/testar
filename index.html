@@ -16,8 +16,6 @@
             var ajax = new XMLHttpRequest();
             var co2=0;
             var input = "0";
-            var col = 0x000000;
-            var colstr = "0";
             ajax.open("get", "https://ydf7mupasyhm2qygcwujzzyriu0faftb.lambda-url.ap-northeast-1.on.aws/");
             ajax.send(); // 通信させます。
             ajax.addEventListener("load", function(){ // loadイベントを登録します。
@@ -49,13 +47,6 @@
                 var text = document.getElementById("text"); 
                 //text.setAttribute('value', text.getAttribute('input') + ' ppm');
                 text.setAttribute('value', input + ' ppm');
-		col=col+0x003000;
-		if (col>=0xffffff){col=0};
-                //console.log('#'+String( col));
-		colstr='#'+String(("00000000" + col.toString(16)).slice( -8 ) );
-                console.log(colstr);
-                //text.setAttribute('color','#'+String( color));
-                text.setAttribute('color',colstr);
             }, false);
             //window.onload = function() {
             //      document.getElementById('output').innerHTML = input;
@@ -97,7 +88,7 @@
                     rotation="-90 0 0"
                     gesture-handler
                 ></a-image>
-                <a-text id="text" value="" color="" rotation="-90 0 0" align="center" scale="5 5 5"></a-text>
+                <a-text id="text" value="" color="red" rotation="-90 0 0" align="center" scale="5 5 5"></a-text>
             </a-marker>
 
             <a-entity camera></a-entity>
