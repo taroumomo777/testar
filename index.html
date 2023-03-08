@@ -1,134 +1,162 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-    <head>
-        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-        <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-        <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-detector.js"></script>
-        <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-handler.js"></script>
-    </head>
+  <head>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-detector.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-handler.js"></script>
+  </head>
 
-    <body style="margin: 0; overflow: hidden;">
-    <button id="start-btn">start</button>
-    <button id="stop-btn">stop</button>
+  <body style="margin: 0; overflow: hidden">
+    <div id="result"></div>
+    <script>
+      SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
+      const recognition = new SpeechRecognition();
 
+      recognition.continuous = true; // これこれ
 
+      recognition.onresult = function (event) {
+        var results = event.results;
+        for (var i = event.resultIndex; i < results.length; i++) {
+          //document.getElementById('result_text').innerHTML = results[i][0].transcript;
+          var text = document.getElementById("text");
+          //text.setAttribute('value', text.getAttribute('input') + ' ppm');
+          //                    text.setAttribute('value',results[i][0].transcript);
+          text.setAttribute("value", "0ppm");
+          console.log(results[i][0].transcript);
+          chara = results[i][0].transcript;
+          if (chara == "テスト") {
+            document.getElementById("sample").innerHTML = "Hello World!";
+          }
+        }
+      };
+      recognition.start();
 
-        <div id="result"></div>
-        <script>
-            var result = document.getElementById('result')
-            var ajax = new XMLHttpRequest();
-            var co2=0;
-            var input = "0";
-            ajax.open("get", "https://ydf7mupasyhm2qygcwujzzyriu0faftb.lambda-url.ap-northeast-1.on.aws/");
-            ajax.send(); // 通信させます。
-            ajax.addEventListener("load", function(){ // loadイベントを登録します。
-                //console.log(this.response); // 通信結果を出力します。
-                //console.log(JSON.parse(ajax.response));
-               // var responseJson = JSON.parse(ajax.response);
-                //console.log(responseJson.Items);
-                ///var json = JSON.parse(this.response);
-                var json = this.response;
-                ////console.log(json);
-                //console.log(json.Items);
-                //console.log(responseJson.Items.DataID.CO2_ppm);
-                // console.log(responseJson.Items.DataID);
-                //var cut2 = responseJson.substr(responseJson.indexOf('CO2_ppm":') + 1);
-                //var cut2 = responseJson.substr(ajax.response.indexOf('CO2_ppm":') + 1);
-                //console.log(cut2);
-                //console.log(responseJson.Items.DataID.f_port);
-                //console.log(responseJson.Items.DataID.session_key_id);
-                //console.log(json.indexOf('CO2_ppm":'));
-                //console.log(json.indexOf('CO2_ppm'));
-                var x=json.indexOf('CO2_ppm');
-                var y=json.indexOf('Hum');
-                co2=json.substring(x+10, y-4);
-                console.log(co2);
-                input="CO2:"+co2;
-                //console.log(json.substring(x+10, y-4));
-                //console.log(json.indexOf('CO2_ppm'));
-                console.log(input);
-                var text = document.getElementById("text"); 
-                //text.setAttribute('value', text.getAttribute('input') + ' ppm');
-                text.setAttribute('value', input + ' ppm');
-            }, false);
-            //window.onload = function() {
-            //      document.getElementById('output').innerHTML = input;
-            //    };
-            //var cut2 = responseJson.indexOf('CO2_ppm":') ;
-            //console.log(ajax.responseText);
-
-
-            //console.log(ajax.response);
-            //var cut2 = ajax.responseText.indexOf('CO2_ppm":') ;
-            
-              const startBtn = document.querySelector('#start-btn');
-              const stopBtn = document.querySelector('#stop-btn');
-              const resultDiv = document.querySelector('#result-div');
-
-              SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
-              let recognition = new SpeechRecognition();
-
-              recognition.lang = 'ja-JP';
-              recognition.interimResults = true;
-              recognition.continuous = true;
-
-              let finalTranscript = ''; // 確定した(黒の)認識結果
-
-              recognition.onresult = (event) => {
-                let interimTranscript = ''; // 暫定(灰色)の認識結果
-                for (let i = event.resultIndex; i < event.results.length; i++) {
-                  let transcript = event.results[i][0].transcript;
-                  if (event.results[i].isFinal) {
-                    finalTranscript += transcript;
-                  } else {
-                    interimTranscript = transcript;
+      /*
+                  recognition.onresult = function(event){
+                      var results = event.results;
+                      for (var i = event.resultIndex; i<results.length; i++){
+                      if(results[i].isFinal)
+                      console.log(results[i][0].transcript);
+                      else
+                      console.log( "[途中経過] "+ results[i][0].transcript);
+                      }
                   }
-                }
-                resultDiv.innerHTML = finalTranscript + '<i style="color:#ddd;">' + interimTranscript + '</i>';
-              }
+                  */
+      /*
+                  recognition.continuous = true; // これこれ
 
-              startBtn.onclick = () => {
-                recognition.start();
-              }
-              stopBtn.onclick = () => {
-                recognition.stop();
-              }
-  
+                  let finalTranscript = ''; // 確定した(黒の)認識結果
+                  recognition.onresult = (event) => {
+                      number=event.results.length;
+                      console.log(number);
+                      console.log(event.results[number ][0].transcript);
+                      if (event.results.length > 0) {
+                          dec = event.results[0 ][0].transcript;
+                          //q.form.submit();
+                          var text = document.getElementById("text");
+                          //text.setAttribute('value', text.getAttribute('input') + ' ppm');
+                          text.setAttribute('value',dec);
+                      }
+                  }
 
-        </script>
+      */
+      /*
+                  recognition.onresult = (event) => {
+                      //console.log(event.results);
+                      console.log(event.results[0][0].transcript);
+                      var text = document.getElementById("text");
+                      //text.setAttribute('value', text.getAttribute('input') + ' ppm');
+                      text.setAttribute('value', event.results[0][0].transcript);
+                  }
+      */
 
+      var result = document.getElementById("result");
+      var ajax = new XMLHttpRequest();
+      var co2 = 0;
+      var input = "0";
+      /*
+                  ajax.open("get", "https://ydf7mupasyhm2qygcwujzzyriu0faftb.lambda-url.ap-northeast-1.on.aws/");
+                  ajax.send(); // 通信させます。
+                  ajax.addEventListener("load", function(){ // loadイベントを登録します。
+                      //console.log(this.response); // 通信結果を出力します。
+                      //console.log(JSON.parse(ajax.response));
+                     // var responseJson = JSON.parse(ajax.response);
+                      //console.log(responseJson.Items);
+                      ///var json = JSON.parse(this.response);
+                      var json = this.response;
+                      ////console.log(json);
+                      //console.log(json.Items);
+                      //console.log(responseJson.Items.DataID.CO2_ppm);
+                      // console.log(responseJson.Items.DataID);
+                      //var cut2 = responseJson.substr(responseJson.indexOf('CO2_ppm":') + 1);
+                      //var cut2 = responseJson.substr(ajax.response.indexOf('CO2_ppm":') + 1);
+                      //console.log(cut2);
+                      //console.log(responseJson.Items.DataID.f_port);
+                      //console.log(responseJson.Items.DataID.session_key_id);
+                      //console.log(json.indexOf('CO2_ppm":'));
+                      //console.log(json.indexOf('CO2_ppm'));
+                      var x=json.indexOf('CO2_ppm');
+                      var y=json.indexOf('Hum');
+                      co2=json.substring(x+10, y-4);
+                      console.log(co2);
+                      input="CO2:"+co2;
+                      //console.log(json.substring(x+10, y-4));
+                      //console.log(json.indexOf('CO2_ppm'));
+                      console.log(input);
+                      var text = document.getElementById("text");
+                      //text.setAttribute('value', text.getAttribute('input') + ' ppm');
+                      text.setAttribute('value', input + ' ppm');
+                  }, false);
+      */
+      var text = document.getElementById("text".textContent);
+      text.setAttribute("value", input + " ppm");
+      //window.onload = function() {
+      //      document.getElementById('output').innerHTML = input;
+      //    };
+      //var cut2 = responseJson.indexOf('CO2_ppm":') ;
+      //console.log(ajax.responseText);
 
-        <a-scene
-            vr-mode-ui="enabled: false;"
-            loading-screen="enabled: false;"
-            arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
-            id="scene"
-            embedded
-            gesture-detector
-        >
-            <a-marker
-                id="animated-marker"
-                type="pattern"
-                preset="custom"https://github.com/taroumomo777/testar/blob/main/index.html
-                url="assets/marker.patt"
-                raycaster="objects: .clickable"
-                emitevents="true"
-                cursor="fuse: false; rayOrigin: mouse;"
-                id="markerA"
-            >
+      //console.log(ajax.response);
+      //var cut2 = ajax.responseText.indexOf('CO2_ppm":') ;
+    </script>
+    <p id="sample"></p>
+    <a-scene
+      vr-mode-ui="enabled: false;"
+      loading-screen="enabled: false;"
+      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+      id="scene"
+      embedded
+      gesture-detector
+    >
+      <a-marker
+        id="animated-marker"
+        type="pattern"
+        preset="custom"
+        url="assets/marker.patt"
+        raycaster="objects: .clickable"
+        emitevents="true"
+        cursor="fuse: false; rayOrigin: mouse;"
+        id="markerA"
+      >
+        <a-image
+          src="assets/asset.png"
+          scale="1 1 1"
+          class="clickable"
+          rotation="-90 0 0"
+          gesture-handler
+        ></a-image>
+        <a-text
+          id="text"
+          value="200ppm"
+          color="red"
+          rotation="-90 0 0"
+          align="center"
+          scale="5 5 5"
+        ></a-text>
+      </a-marker>
 
-                
-                <a-image
-                    src="assets/asset.png"
-                    scale="1 1 1"
-                    class="clickable"
-                    rotation="-90 0 0"
-                    gesture-handler
-                ></a-image>
-                <a-text id="text" value="" color="red" rotation="-90 0 0" align="center" scale="5 5 5"></a-text>
-            </a-marker>
-
-            <a-entity camera></a-entity>
-        </a-scene>
-    </body>
+      <a-entity camera></a-entity>
+    </a-scene>
+  </body>
 </html>
