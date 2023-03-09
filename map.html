@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+<meta charset="UTF-8">
+<title>Sample_GoogleMap</title>
+
+<script src="https://maps.google.com/maps/api/js?key=AIzaSyBbRW4UjBFrgFcU2i9tguU3GbB9KA7MYfw&language=ja"></script>
+
+<style>
+html { height: 100% }
+body { height: 100% }
+#map { height: 100%; width: 100%}
+</style>
+</head>
+
+<body>
+<div id="map"></div>
+
+<script>
+  var lat=34.696934;
+  var lng=135.495057;
+var MyLatLng = new google.maps.LatLng(lat, lng);
+
+
+
+
+
+var Options = {
+ zoom: 20,      //地図の縮尺値
+ center: MyLatLng,    //地図の中心座標
+ mapTypeId: 'roadmap'   //地図の種類
+};
+var map = new google.maps.Map(document.getElementById('map'), Options);
+    // 菱電商事 関西支社
+   // var myLatlng = new google.maps.LatLng(campanylat,campanylng);
+      var marker = new google.maps.Marker({
+       position: MyLatLng,
+       map: map,
+       title:"菱電商事",
+       	animation: google.maps.Animation.DROP,
+  //    });     
+
+	icon: {
+	fillColor: "#FF0000",                //塗り潰し色
+        
+        fillOpacity: 0.8,                    //塗り潰し透過率
+	path: google.maps.SymbolPath.CIRCLE, //円を指定
+	scale: 25,                           //円のサイズ
+	strokeColor: "#FF0000",              //枠の色
+        strokeWeight: 1.0                    //枠の透過率
+        
+	},
+	label: {
+	text: '菱電商事',                           //ラベル文字
+	color: '#FFFFFF',                    //文字の色
+	fontSize: '10px'                     //文字のサイズ
+	}
+});
+
+//https://maps.googleapis.com/maps/api/js?key=AIzaSyBtzrLsgnKk9QKND_3oTKGskmpoQvJ9PMA
+</script>
+
+</body>
+</html>
+
+
+
