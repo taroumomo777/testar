@@ -11,11 +11,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 
+    <script src="https://maps.google.com/maps/api/js?key=AIzaSyBbRW4UjBFrgFcU2i9tguU3GbB9KA7MYfw&language=ja"></script>
 
   </head>
 
 
-
+  <div id="result"></div>
+  <div class="btn-container">
+    <button id="btn3">ボタン３</button>
+    <button id="btn4">ボタン４</button>
+  </div>
+  <div id="mask" class="hidden"></div>
+  <section id="modal" class="hidden">
+    <p>ボタン３がクリックされました！</p>
+  </section>
 
 
   <p id="sample"></p>
@@ -56,15 +65,7 @@
 
     <a-entity camera></a-entity>
   </a-scene>
-  <div id="result"></div>
-  <div class="btn-container">
-    <button id="btn3">ボタン３</button>
-    <button id="btn4">ボタン４</button>
-  </div>
-  <div id="mask" class="hidden"></div>
-  <section id="modal" class="hidden">
-    <p>ボタン３がクリックされました！</p>
-  </section>
+
 
 
     <script>
@@ -92,7 +93,7 @@
       recognition.continuous = true; // これこれ
       recognition.start();
 
-      function foo() {
+  //    function foo() {
       recognition.onresult = function (event) {
         var results = event.results;
         for (var i = event.resultIndex; i < results.length; i++) {
@@ -101,17 +102,53 @@
           //text.setAttribute('value', text.getAttribute('input') + ' ppm');
           //                    text.setAttribute('value',results[i][0].transcript);
           ////text.setAttribute("value", "0ppm");
-          console.log(results[i][0].transcript);
-          chara = results[i][0].transcript;
-          if (chara == "テスト") {
-            document.getElementById("sample").innerHTML = "Hello World!";
+
+          //chara = (results[i][0].transcript).normalize('NFKC');
+          chara = String(results[i][0].transcript);
+          console.log(chara);
+/*          console.log(chara.length);
+          console.log(chara.indexOf( "テスト" ));
+          console.log(chara.substring(0,1)-"テ")
+          console.log(chara.substring(1,2)-"ス")
+          console.log(chara.substring(2,3)-"ト")
+          console.log( chara.includes("テスト"));    
+             */
+          //if (chara.substr( 0, 3 ) === "テスト") {
+
+          //if  ((chara.indexOf( 'テスト' )!=-1)&&(chara.length==3)){
+//          if  ((chara.substring(0,1)==="テ")&&(chara.substring(1,2)==="ス")&&(chara.substring(2,3)==="ト")){
+
+ //         if  (chara.includes('テスト')){
+            //if  (String(chara) ==('テスト')){
+            if  (chara ==('場所表示')){
+            console.log("成功");
+          //  document.getElementById("sample").innerHTML = "Hello World!";
+          //console.log(chara);
+            window.location.href = 'map.html';
+          }
+          //if(chara.length==3){
+          if (chara == "データ表示") {
+          //  console.log(chara);
+          //  document.getElementById("sample").innerHTML = "Hello World!";
+            window.location.href = 'chart.html';
+           //window.location.href = 'map.html';
           }
         }
-
+        /*
+        console.log(chara);
+        if (chara == 'テスト') {
+          console.log("成功");
+          //  console.log(chara);
+          //  document.getElementById("sample").innerHTML = "Hello World!";
+            window.location.href = 'chart.html';
+          }
+          */
         co2++;
         console.log(co2);
+        var text = document.getElementById("artext");
+        text.setAttribute("value", String(chara));
       };
-      setTimeout(() => {
+/*      setTimeout(() => {
         foo();
       }, 1000);
     }
@@ -161,7 +198,7 @@
 
       });
 
-
+*/
 
 </script>
 
