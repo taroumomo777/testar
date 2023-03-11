@@ -17,7 +17,6 @@
 
 
 
-  <p id="sample"></p>
   <a-scene
     vr-mode-ui="enabled: false;"
     loading-screen="enabled: false;"
@@ -56,9 +55,9 @@
     <a-entity camera></a-entity>
   </a-scene>
 
-
-
-
+  <div class="btn-container">
+    <button id="btn4">ボタン</button>
+  </div>
 
     <script>
 
@@ -75,7 +74,7 @@
             var text = document.getElementById("artext");
         text.setAttribute("value", co2 + " ppm");
 
-
+        document.getElementById('btn4').style.visibility = 'hidden'
 
       SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
       const recognition = new SpeechRecognition();
@@ -108,6 +107,10 @@
           }
           else{
               console.log(hyoka);
+              document.getElementById('btn4').style.visibility = 'visible'
+              var btn4 = document.getElementById('btn4');
+              btn4.textContent = chara;
+
               //alert(chara);
               if (chara != "") {
                   var text = document.getElementById("artext");
