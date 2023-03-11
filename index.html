@@ -11,8 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 
-
-  </head>
+   </head>
 
 
 
@@ -59,12 +58,11 @@
 
 
 
+
+
     <script>
 
-      $('#fullOverlay').css({
-        'display': 'none',
-        'z-index': -1
-      });
+
 
 
 
@@ -72,7 +70,7 @@
           //  $(function() {
             var count =0;
             var co2 = 200;
-
+            var hyoka =0;
 
             var text = document.getElementById("artext");
         text.setAttribute("value", co2 + " ppm");
@@ -84,7 +82,6 @@
       recognition.continuous = true; // これこれ
       recognition.start();
 
-  //    function foo() {
       recognition.onresult = function (event) {
         var results = event.results;
         for (var i = event.resultIndex; i < results.length; i++) {
@@ -97,109 +94,48 @@
           //chara = (results[i][0].transcript).normalize('NFKC');
           chara = String(results[i][0].transcript);
           console.log(chara);
-/*          console.log(chara.length);
-          console.log(chara.indexOf( "テスト" ));
-          console.log(chara.substring(0,1)-"テ")
-          console.log(chara.substring(1,2)-"ス")
-          console.log(chara.substring(2,3)-"ト")
-          console.log( chara.includes("テスト"));    
-             */
-          //if (chara.substr( 0, 3 ) === "テスト") {
 
-          //if  ((chara.indexOf( 'テスト' )!=-1)&&(chara.length==3)){
-//          if  ((chara.substring(0,1)==="テ")&&(chara.substring(1,2)==="ス")&&(chara.substring(2,3)==="ト")){
+          if  (hyoka == 0){
+              if  (chara ==('マップ表示')){
+                window.location.href = 'map.html';
+              }
+              if (chara == "データ表示") {
+                window.location.href = 'chart.html';
+              }
+              if (chara == "テストモード") {
+                hyoka=1;
+              }
+          }
+          else{
+              console.log(hyoka);
+              alert(chara);
+              if (chara != "") {
+                  var text = document.getElementById("artext");
+                  text.setAttribute("value", String(chara));
 
- //         if  (chara.includes('テスト')){
-            //if  (String(chara) ==('テスト')){
-            if  (chara ==('場所表示')){
-            console.log("成功");
-          //  document.getElementById("sample").innerHTML = "Hello World!";
-          //console.log(chara);
-            window.location.href = 'map.html';
-          }
-          //if(chara.length==3){
-          if (chara == "データ表示") {
-          //  console.log(chara);
-          //  document.getElementById("sample").innerHTML = "Hello World!";
-            window.location.href = 'chart.html';
-           //window.location.href = 'map.html';
-          }
+                  // 発言を作成
+                  const uttr = new SpeechSynthesisUtterance(chara)
+
+                  // 言語 (日本語:ja-JP, アメリカ英語:en-US, イギリス英語:en-GB, 中国語:zh-CN, 韓国語:ko-KR)
+                  uttr.lang = "ja-JP"
+
+                  // 速度 0.1-10 初期値:1 (倍速なら2, 半分の倍速なら0.5)
+                  uttr.rate = 1.0
+
+                  // 高さ 0-2 初期値:1
+                  uttr.pitch = 1.0
+                  // 発言を再生 (発言キューに発言を追加)
+                  speechSynthesis.speak(uttr)
+              }
+            }
+          
         }
-        /*
-        console.log(chara);
-        if (chara == 'テスト') {
-          console.log("成功");
-          //  console.log(chara);
-          //  document.getElementById("sample").innerHTML = "Hello World!";
-            window.location.href = 'chart.html';
-          }
-          */
-        co2++;
-        console.log(co2);
-        var text = document.getElementById("artext");
-        text.setAttribute("value", String(chara));
-      };
-/*      setTimeout(() => {
-        foo();
-      }, 1000);
-    }
-    //while (1) {
+      }
       co2++;
-      text.setAttribute("value", co2 + " ppm");
-//}
+      console.log(co2);
 
-      const btn3 = document.getElementById('btn3');
-      const mask = document.getElementById('mask');
-      const modal = document.getElementById('modal');
-
-
-
-      btn3.addEventListener('click', () => {
-       // mask.classList.remove('hidden');
-       // modal.classList.remove('hidden');
-
-        //-----------------------------
-        co2 = 888;
-
-
-        var text = document.getElementById("artext");
-        text.setAttribute("value", co2 + " ppm");
-        //----------------
-        window.location.href = 'chart.html';
-
-      });
-
-
-        //-----------------
-      //mask.addEventListener('click', () => {
-        //mask.classList.add('hidden');
-        //modal.classList.add('hidden');
-
-
-
- //       $('#fullOverlay').css({
-   //     'display': 'block',
-     //   'z-index': 2147483647
-     // });
-      //});
-
-      const btn4 = document.getElementById('btn4');
-      btn4.addEventListener('click', () => {
-        window.location.href = 'map.html';
-
-      });
-
-*/
 
 </script>
-<div id="result"></div>
-<div class="btn-container">
-  <button id="btn3">ボタン３</button>
-  <button id="btn4">ボタン４</button>
-</div>
-<div id="mask" class="hidden"></div>
-<section id="modal" class="hidden">
-  <p>ボタン３がクリックされました！</p>
-</section>
+
   </body>
 </html>
