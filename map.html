@@ -6,6 +6,7 @@
 <title>Sample_GoogleMap</title>
 
 
+
 <style>
 html { height: 100% }
 body { height: 100% }
@@ -15,6 +16,13 @@ body { height: 100% }
 
 <body>
 <div id="map"></div>
+
+
+      
+<div class="btn-container">
+	<button id="btn4">ボタン４</button>
+  </div>
+
 
 <script>
   var lat=34.696934;
@@ -57,7 +65,66 @@ var map = new google.maps.Map(document.getElementById('map'), Options);
 	}
 });
 
-//https://maps.googleapis.com/maps/api/js?key=AIzaSyBtzrLsgnKk9QKND_3oTKGskmpoQvJ9PMA
+SpeechRecognition = webkitSpeechRecognition || SpeechRecognition;
+const recognition = new SpeechRecognition();
+recognition.continuous = true; // これこれ
+recognition.start();
+
+
+recognition.onresult = function (event) {
+	var results = event.results;
+	for (var i = event.resultIndex; i < results.length; i++) {
+	console.log(results[i][0].transcript);
+	chara = results[i][0].transcript;
+	if (chara == "ホーム画面") {
+
+          // 発言を作成
+          const uttr = new SpeechSynthesisUtterance("ホーム画面に戻ります")
+
+          // 言語 (日本語:ja-JP, アメリカ英語:en-US, イギリス英語:en-GB, 中国語:zh-CN, 韓国語:ko-KR)
+          uttr.lang = "ja-JP"
+
+          // 速度 0.1-10 初期値:1 (倍速なら2, 半分の倍速なら0.5)
+          uttr.rate = 1.0
+
+          // 高さ 0-2 初期値:1
+          uttr.pitch = 1.0
+          // 発言を再生 (発言キューに発言を追加)
+          speechSynthesis.speak(uttr)
+
+
+
+
+
+		window.location.href = 'index.html';
+	}
+	}
+
+}
+
+
+
+const btn4 = document.getElementById('btn4');
+        btn4.addEventListener('click', () => {
+          window.location.href = 'index.html';
+  /*
+        console.log(co2);
+          // 発言を作成
+          const uttr = new SpeechSynthesisUtterance("エアコンを稼働させて換気します")
+
+          // 言語 (日本語:ja-JP, アメリカ英語:en-US, イギリス英語:en-GB, 中国語:zh-CN, 韓国語:ko-KR)
+          uttr.lang = "ja-JP"
+
+          // 速度 0.1-10 初期値:1 (倍速なら2, 半分の倍速なら0.5)
+          uttr.rate = 1.0
+
+          // 高さ 0-2 初期値:1
+          uttr.pitch = 1.0
+          // 発言を再生 (発言キューに発言を追加)
+          speechSynthesis.speak(uttr)
+*/
+      });
+
 </script>
 
 </body>
